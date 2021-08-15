@@ -1,4 +1,4 @@
-from mclp import *
+from .mclp import *
 import numpy as np
 import pandas as pd
 Npoints = 300
@@ -16,7 +16,10 @@ M = 100
 
 # print( pd.DataFrame(points))
 
-def generate_candidate_sites(points,M=100):
+from scipy.spatial import ConvexHull
+from shapely.geometry import Polygon, Point
+from numpy import random
+def demo_generate_candidate_sites(points,M=100):
     '''
     Generate M candidate sites with the convex hull of a point set
     Input:
@@ -38,13 +41,13 @@ def generate_candidate_sites(points,M=100):
     return np.array([(p.x,p.y) for p in sites])
 
 #후보지 생성(demo)
-sites = generate_candidate_sites(points, M)
+sites = demo_generate_candidate_sites(points, M)
 
 plot_input(points)
 plot_input(sites)
 
 #모든 포인트에 대해 1점
-w = [ 1 for _ in points]
+w = [ 1 for _ in points ]
 
 opt_sites,f = mclp(points, K, radius, w, sites)
 print(f)

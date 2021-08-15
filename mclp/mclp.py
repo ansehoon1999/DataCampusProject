@@ -41,9 +41,6 @@ import numpy as np
 import pandas as pd
 import time
 from scipy.spatial import distance_matrix
-from scipy.spatial import ConvexHull
-from shapely.geometry import Polygon, Point
-from numpy import random
 
 # def generate_candidate_sites(df_result_fin: pd.DataFrame, M=100):
 #     sites = []
