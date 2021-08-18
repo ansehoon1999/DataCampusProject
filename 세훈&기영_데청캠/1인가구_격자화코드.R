@@ -38,7 +38,7 @@ result <- foreach::foreach(index = 1:loopSize,
                              library(data.table)  
                              library(dplyr)                 
                              
-                             fileName <- paste0(src_folders[index],"/TL_SPBD_BULD.shp")
+                             fileName <- paste0(src_folders[index],"/TL_SPBD_BULD_거주지.shp")
                              print(paste0("read.....",fileName))
                              
                              bldg <- fileName %>% read_sf() #파일을 읽는다.
@@ -153,7 +153,7 @@ library(data.table)
 
 print(admCD)
 folderPopu <- "C:/Users/PC/Desktop/pixel_allocate_data/stat_boundary_pfh/"
-fileName2 <- paste0(folderPopu, "2019년_60살_배달인구.txt")
+fileName2 <- paste0(folderPopu, "2019년_1인가구.txt")
 
 popuGrid50 <- distributePopulation(fileName2, admCD)
 
@@ -207,6 +207,6 @@ extractSggGrid <- function(popuGridData, sggCode, sggcoordData) {
 }
 
 popuShp <- st_as_sf(popuGrid100, coords = c("x", "y"), crs = 5179) 
-st_write(popuShp, paste0(folderWrite,"delivery_popu60_100.shp"), driver="ESRI Shapefile")
+st_write(popuShp, paste0(folderWrite,"family1.shp"), driver="ESRI Shapefile")
 
 

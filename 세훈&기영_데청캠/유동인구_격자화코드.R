@@ -38,14 +38,13 @@ result <- foreach::foreach(index = 1:loopSize,
                              library(data.table)  
                              library(dplyr)                 
                              
-                             fileName <- paste0(src_folders[index],"/TL_SPBD_BULD.shp")
+                             fileName <- paste0(src_folders[index],"/Z_NGII_N3L_A0033320.shp")
                              print(paste0("read.....",fileName))
                              
                              bldg <- fileName %>% read_sf() #파일을 읽는다.
                              print(bldg)
                              bldgCoord <- as.data.table(st_coordinates(bldg)) #좌표들만 추출해서 table에 담는다.
                              
-                             #250m 격자에 할당한다.
                              gridTrue <- bldgCoord %>% mutate( xx = as.integer(X/100), yy = as.integer(Y/100) ) %>%
                                distinct( gridx = xx, gridy = yy)           
                              return(gridTrue)
@@ -55,10 +54,7 @@ result <- foreach::foreach(index = 1:loopSize,
 folderWrite <- "C:/Users/PC/Desktop/work/"
 
 parallel::stopCluster(myCluster)
-eTime <- Sys.time()
-print((eTime - sTime)*60)
-rm(sTime)
-rm(eTime)
+
 uniqueGrid <- result %>%  distinct( gridx,gridy) %>%
   mutate( x = gridx*100, y = gridy*100)
 fwrite(uniqueGrid, file=paste0(folderWrite,"bldgGrid_parallel.tsv"),
@@ -81,6 +77,7 @@ library(sf)
 library(data.table)
 
 sourceCpp("C:/Users/PC/Desktop/distributeValueToGrid_100m.cpp")
+
 
 bldgGrid <- fread(paste0(folderWrite,"bldgGrid_parallel.tsv"),
                   sep = "\t", header = TRUE, stringsAsFactors = FALSE)
@@ -156,7 +153,8 @@ library(data.table)
 
 print(admCD)
 folderPopu <- "C:/Users/PC/Desktop/pixel_allocate_data/stat_boundary_pfh/"
-fileName2 <- paste0(folderPopu, "2019년_유동인구.txt")
+fileName <- paste0(folderPopu, "11_2019년_성연령별인구.txt")
+fileName2 <- paste0(folderPopu, "2019년_유동인구_12시.txt")
 
 popuGrid50 <- distributePopulation(fileName2, admCD)
 
@@ -195,6 +193,9 @@ library(rmapshaper)
 
 fileName <- paste0(folderAdm,"bnd_sigungu_00_2020_2020_2Q.shp")
 
+
+
+
 extractSggGrid <- function(popuGridData, sggCode, sggcoordData) {
   
   sggcoordExtracted <- sggcoordData %>% filter(sggcode==sggCode)
@@ -208,6 +209,6 @@ extractSggGrid <- function(popuGridData, sggCode, sggcoordData) {
 }
 
 popuShp <- st_as_sf(popuGrid100, coords = c("x", "y"), crs = 5179) 
-st_write(popuShp, paste0(folderWrite,"move_popu_100.shp"), driver="ESRI Shapefile")
+st_write(popuShp, paste0(folderWrite,"move_popu_100_12.shp"), driver="ESRI Shapefile")
 
 
