@@ -1,25 +1,9 @@
-from .mclp import *
 import numpy as np
-import pandas as pd
-Npoints = 300
-from sklearn.datasets import make_moons
-points,_ = make_moons(Npoints,noise=0.15)
-
-# Number of sites to select
-K = 10
-
-# Service radius of each site
-radius = 0.2
-
-# Candidate site size (random sites generated)
-M = 100
-
-# print( pd.DataFrame(points))
-
 from scipy.spatial import ConvexHull
 from shapely.geometry import Polygon, Point
 from numpy import random
-def demo_generate_candidate_sites(points,M=100):
+
+def demo_generate_candidate_sites(points, M=100):
     '''
     Generate M candidate sites with the convex hull of a point set
     Input:
@@ -39,18 +23,3 @@ def demo_generate_candidate_sites(points,M=100):
         if (random_point.within(poly)):
             sites.append(random_point)
     return np.array([(p.x,p.y) for p in sites])
-
-#후보지 생성(demo)
-sites = demo_generate_candidate_sites(points, M)
-
-plot_input(points)
-plot_input(sites)
-
-#모든 포인트에 대해 1점
-w = [ 1 for _ in points ]
-
-opt_sites,f = mclp(points, K, radius, w, sites)
-print(f)
-
-# # Plot the result 
-plot_result(points,opt_sites,radius)

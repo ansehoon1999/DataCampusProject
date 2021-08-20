@@ -1,92 +1,33 @@
-## reference:   https://github.com/cyang-kth/maximum-coverage-location
-##              https://compas.lh.or.kr/subj/past/code?subjNo=SBJ_2009_001&teamNo=677
-
-"""
-
-Python implementation of the maximum coverage location problem.
-
-The program randomly generates a set of candidate sites, among 
-which the K optimal candidates are selected. The optimization 
-problem is solved by integer programming. 
-
-Author: Can Yang
-Date: 2019-11-22
-
-MIT License
-
-Copyright (c) 2019 Can Yang
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-"""
-
-
 import numpy as np
-import pandas as pd
 import time
 from scipy.spatial import distance_matrix
+from mip import Model, xsum, maximize, BINARY
+from matplotlib import pyplot as plt
 
-# def generate_candidate_sites(df_result_fin: pd.DataFrame, M=100):
-#     sites = []
-#     idx=np.random.choice(np.array(range(0,len(df_result_fin))), M)
-#     for i in range(len(idx)):
-#         random_point = Point(np.array(df_result_fin.iloc[idx]['coord_cent'])[i][0],
-#                              np.array(df_result_fin.iloc[idx]['coord_cent'])[i][1])
-#         sites.append(random_point)
-#     return np.array([(p.x,p.y) for p in sites])
+#####################    MCLP ALGORITHM    ######################
+#######input
+#points             -> 커버해야할 포인트들(2차원 nparray). ex) [[10,1], [127,127]]
+#K                  -> 설치할 기기의 수(int)
+#radius             -> 한 기기당 커버 가능한 범위
+#w                  -> 포인트들의 중요도(wight) 벡터
+#sites              -> 설치가 가능한 위치(후보지)
 
-# def generate_candidate_sites(df_result_fin: pd.DataFrame, Weight, M=100):
-#     sites = []
-#     idx = df_result_fin.sort_values(by = Weight, ascending = False).iloc[1:M].index
-#     for i in range(len(idx)):
-#         random_point = Point(np.array(df_result_fin.loc[idx]['coord_cent'])[i][0],
-#                              np.array(df_result_fin.loc[idx]['coord_cent'])[i][1])
-#         sites.append(random_point)
-#     return np.array([(p.x,p.y) for p in sites])
-
+#######output
+#opt_sites          -> 결과적으로 설치할 위치들
+#m.objective_value  -> 결과값의 커버 크기
+#################################################################
 def mclp(points:np.ndarray, K, radius, w, sites:np.ndarray):
-    """
-    Solve maximum covering location problem
-    Input:
-        points: input points, Numpy array in shape of [N,2]
-        K: the number of sites to select
-        radius: the radius of circle
-        M: the number of candidate sites, which will randomly generated inside
-        the ConvexHull wrapped by the polygon
-    Return:
-        opt_sites: locations K optimal sites, Numpy array in shape of [K,2]
-        f: the optimal value of the objective function
-    """
     print('----- Configurations -----')
     print('  Number of points %g' % points.shape[0])
     print('  K %g' % K)
     print('  Radius %g' % radius)
 
     start = time.time()
-    J = sites.shape[0]
-    I = points.shape[0]
+    J, I = sites.shape[0], points.shape[0]
     D = distance_matrix(points,sites)
-    mask1 = D<=radius
+    mask1 = (D <= radius)
     D[mask1]=1
     D[~mask1]=0
-
-    from mip import Model, xsum, maximize, BINARY
 
     # Build model
     m:Model = Model("mclp")
@@ -95,10 +36,9 @@ def mclp(points:np.ndarray, K, radius, w, sites:np.ndarray):
     x = [m.add_var(name = "x%d" % j, var_type = BINARY) for j in range(J)]
     y = [m.add_var(name = "y%d" % i, var_type = BINARY) for i in range(I)]
 
+    # Add objective function
     m.objective = maximize(xsum(w[i]*y[i] for i in range (I)))
-
     m += xsum(x[j] for j in range(J)) == K
-
     for i in range(I):
         m += xsum(x[j] for j in np.where(D[i]==1)[0]) >= y[i]
 
@@ -125,7 +65,6 @@ def plot_input(points):
         opt_sites: locations K optimal sites, Numpy array in shape of [K,2]
         radius: the radius of circle
     '''
-    from matplotlib import pyplot as plt
     fig = plt.figure(figsize=(8,8))
     plt.scatter(points[:,0],points[:,1],c='C0')
     ax = plt.gca()
@@ -143,7 +82,6 @@ def plot_result(points,opt_sites,radius):
         opt_sites: locations K optimal sites, Numpy array in shape of [K,2]
         radius: the radius of circle
     '''
-    from matplotlib import pyplot as plt
     fig = plt.figure(figsize=(8,8))
     plt.scatter(points[:,0],points[:,1],c='C0')
     ax = plt.gca()
