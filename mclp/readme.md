@@ -11,7 +11,7 @@
 |  5  | sites      | 기기가 들어설 수 있는 위치 |
 
 ### _outputs_
-| num | parameter          | description  |
+| num | variable          | description  |
 | --- | ------------------ | ------------ |
 |  1  | opt_sites          | 기기가 설치될 위치 |
 |  2  | m.objective_value  | 설치한 기기들로 커버가능한 수요 | 
