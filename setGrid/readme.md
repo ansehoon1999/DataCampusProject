@@ -11,3 +11,5 @@ https://en.wikipedia.org/wiki/Haversine_formula
 회수 기기들의 경우는 500m 이하
 
 에 해당하는 경우에 시설 또는 기기가 해당 격자를 커버하고 있다고 설정하여 할당한다.
+
+[시설 커버 범위(Jupyter Notebook)](./시설_커버_범위.ipynb)
