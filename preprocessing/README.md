@@ -51,6 +51,11 @@
 <br><br> 
 
 
+| 인도(보도) 위치 추출 | 100x100 격자화 | 격자에 유동인구 할당 |
+| --- | ---- | --- |
+|![image](https://user-images.githubusercontent.com/63048392/131242381-aa53d744-edd3-4cce-bf59-798734f2928a.png)|![image](https://user-images.githubusercontent.com/63048392/131242384-7bfcf686-a9b6-4840-b46a-57cf42bf5e39.png)|![image](https://user-images.githubusercontent.com/63048392/131242387-bff062b7-ce83-48a8-9bd9-bb71ab6f1ec5.png)|
+
+<br><br> 
 
 ### 2️⃣ 배달 인구
 
@@ -64,6 +69,12 @@
 
 - 이후에 '배달인구_격자화코드.R'을 실행합니다.
 - 끝까지 실행하면 output_file 폴더에 'del_popu_100_n.shp' 외 3개의 파일이 생성됩니다. (n은 10대부터 60대까지 3시간 간격의 숫자) 
+<br><br> 
+
+
+| 건물 위치 추출 | 100x100 격자화 | 격자에 배달인구 할당 |
+| --- | ---- | --- |
+|![image](https://user-images.githubusercontent.com/63048392/131242434-9f45e2e6-dbf1-44ac-9275-2d1870274d88.png)|![image](https://user-images.githubusercontent.com/63048392/131242436-59ba5c45-7804-4d3d-98c6-ef068595bdbf.png)|![image](https://user-images.githubusercontent.com/63048392/131242442-60177154-a369-49fd-b379-211dedc69a16.png)|
 
 <br><br>
 
@@ -74,7 +85,12 @@
 - 이후에 '거주인구_격자화코드.R'을 실행합니다.
 - 끝까지 실행하면 output_file 폴더에 'live_popu_100.shp' 외 3개의 파일이 생성됩니다. 
 <br><br>(오래걸리는 것을 대비해서 live_data에 파일 실행 결과 txt 파일 사전 첨부)
+<br><br> 
 
+
+| 거주지 위치 추출 | 100x100 격자화 | 격자에 거주인구 할당 |
+| --- | ---- | --- |
+|![image](https://user-images.githubusercontent.com/63048392/131242510-3555133c-b1a9-4a2d-b32b-0a49c42415eb.png)|![image](https://user-images.githubusercontent.com/63048392/131242512-a2fbd951-3fbb-433e-9328-342f7b462011.png)|![image](https://user-images.githubusercontent.com/63048392/131242516-a9215a16-e289-4b9c-9665-7c273b9d0f7c.png)|
 
 <br><br>
 ### 4️⃣ 1인 가구
@@ -84,8 +100,12 @@
 - 이후에 '1인가구_격자화코드.R'을 실행합니다.
 - 끝까지 실행하면 output_file 폴더에 '1live_popu_100.shp' 외 3개의 파일이 생성됩니다. 
 <br><br>(오래걸리는 것을 대비해서 1family_data에 파일 실행 결과 txt 파일 사전 첨부)
+<br><br> 
 
 
+| 거주지 위치 추출 | 100x100 격자화 | 격자에 1인가구 할당 |
+| --- | ---- | --- |
+|![image](https://user-images.githubusercontent.com/63048392/131242510-3555133c-b1a9-4a2d-b32b-0a49c42415eb.png)|![image](https://user-images.githubusercontent.com/63048392/131242512-a2fbd951-3fbb-433e-9328-342f7b462011.png)|![image](https://user-images.githubusercontent.com/63048392/131242684-ab3c6607-8843-44d5-ab1d-c6446964e893.png)|
 
 <br><br>
 ### 5️⃣ 지하철, 버스정류소, AI 재활용 로봇
