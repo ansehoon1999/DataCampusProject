@@ -1,5 +1,5 @@
 
-# 데이터 캠퍼스 '수퍼루키조' 코드 설명
+# 📮 자원순환기기 입지 분석 - '수퍼루키조😎'
 
 ## 📃 Brief Description
 <br>
@@ -190,7 +190,4 @@ reference: https://github.com/cyang-kth/maximum-coverage-location
 - MCLP text cell 이후의 코드를 실행합니다.
 - 코드를 실행하면 아래와 같은 예시 결과가 나옵니다.
 
-![image](https://user-images.githubusercontent.com/63048392/131242158-c05e156a-c86c-44b5-a925-62fddb7b7d60.png)
-
-
-
+<img src="https://user-images.githubusercontent.com/63048392/131242158-c05e156a-c86c-44b5-a925-62fddb7b7d60.png" width="400" height="300">
