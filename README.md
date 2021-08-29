@@ -1,6 +1,11 @@
 
 # 📮 자원순환기기 입지 분석 - '수퍼루키조😎'
 
+
+❗ 사진이 안보인다면 아래 링크를 통해 참고해주세요
+
+https://github.com/ansehoon1999/DataCampusProject
+
 ❗ 유동인구 데이터가 28GB가 넘어가기 때문에 직접 보내기 보다는 다운로드를 받을 수 있는 링크를 첨부합니다.
 
 https://drive.google.com/drive/u/0/folders/1zKzEjruodiH65y25NBdeabvI_cQzOQ0u
